@@ -17,7 +17,7 @@ exports.saveBoard = async function(text, time, boardPass, socketId) {
 exports.getBoard = async function(uuid, password) {
   var board = await dbService.findByUUID(uuid);
 
-  if (board || Object.keys(board).length !== 0) {
+  if (board && Object.keys(board).length !== 0) {
     var checkTime = await timeControl(board.time, board.createdDate);
     if (checkTime) {
       var checkPassword = await passwordService.checkPassword(

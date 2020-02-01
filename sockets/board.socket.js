@@ -48,11 +48,11 @@ exports.init = function(io, socket) {
           }
         });
 
-        if (responseData.found) {
-          if (getBoardCounterList[socket.id]) {
-            clearInterval(getBoardCounterList[socket.id]);
-          }
+        if (getBoardCounterList[socket.id]) {
+          clearInterval(getBoardCounterList[socket.id]);
+        }
 
+        if (responseData.found) {
           var time = responseData.boardCountDown;
           const counter = setInterval(() => {
             time = time - 1;
@@ -70,5 +70,12 @@ exports.init = function(io, socket) {
         }
       }
     });
+  });
+
+  socket.on("disconnect", function(data) {
+    console.log("disconnect jedi! : " + socket.id);
+    if (getBoardCounterList[socket.id]) {
+      clearInterval(getBoardCounterList[socket.id]);
+    }
   });
 };

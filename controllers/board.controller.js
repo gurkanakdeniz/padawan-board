@@ -6,19 +6,21 @@ exports.save = async function(data, socket) {
   var boardPassword = data.boardPassword ? data.boardPassword : "42";
   var socketId = socket.id;
 
-  var serviceResponse = await BoardService.saveBoard(
-    board,
-    boardTime,
-    boardPassword,
-    socketId
-  );
-  if (serviceResponse) {
-    var response = {
-      uuid: serviceResponse.uuid,
-      boardCountDown: serviceResponse.time,
-      success: true
-    };
-    return response;
+  if (boardTime - 0 > 1) {
+    var serviceResponse = await BoardService.saveBoard(
+      board,
+      boardTime,
+      boardPassword,
+      socketId
+    );
+    if (serviceResponse) {
+      var response = {
+        uuid: serviceResponse.uuid,
+        boardCountDown: serviceResponse.time,
+        success: true
+      };
+      return response;
+    }
   }
 
   return "";
